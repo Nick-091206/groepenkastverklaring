@@ -15,10 +15,10 @@ class WizardController extends Controller
     public function step1Store(Request $request)
     {
         $request->validate([
-            'naam'      => 'required|string|max:255',
-            'adres'     => 'required|string|max:255',
-            'postcode'  => 'required|string|max:20',
-            'stad'      => 'required|string|max:255',
+            'naam'           => 'required|string|max:255',
+            'adres'          => 'required|string|max:255',
+            'postcode'       => 'required|string|max:20',
+            'stad'           => 'required|string|max:255',
             'aantal_groepen' => 'required|integer|min:1|max:100',
         ]);
 
@@ -39,9 +39,9 @@ class WizardController extends Controller
             return redirect()->route('wizard.step1');
         }
 
-        $aantalGroepen = session('wizard.aantal_groepen');
-
-        return view('wizard.step2', compact('aantalGroepen'));
+        return view('wizard.step2', [
+            'aantalGroepen' => session('wizard.aantal_groepen'),
+        ]);
     }
 
     public function step2Store(Request $request)
@@ -51,16 +51,16 @@ class WizardController extends Controller
         }
 
         $aantalGroepen = session('wizard.aantal_groepen');
-
+        $groepen = [];
         $rules = [];
-        for ($i = 1; $i <= $aantalGroepen; $i++) {
+
+        foreach (range(1, $aantalGroepen) as $i) {
             $rules["groep_{$i}"] = 'nullable|string|max:255';
         }
 
         $request->validate($rules);
 
-        $groepen = [];
-        for ($i = 1; $i <= $aantalGroepen; $i++) {
+        foreach (range(1, $aantalGroepen) as $i) {
             $groepen[$i] = $request->input("groep_{$i}", '');
         }
 
@@ -76,18 +76,16 @@ class WizardController extends Controller
         }
 
         $data = [
-            'naam'    => session('wizard.naam'),
-            'adres'   => session('wizard.adres'),
+            'naam'     => session('wizard.naam'),
+            'adres'    => session('wizard.adres'),
             'postcode' => session('wizard.postcode'),
-            'stad'    => session('wizard.stad'),
-            'groepen' => session('wizard.groepen'),
+            'stad'     => session('wizard.stad'),
+            'groepen'  => session('wizard.groepen'),
         ];
 
-        $pdf = Pdf::loadView('pdf.verklaring', $data)
-            ->setPaper('a4', 'portrait');
+        $pdf = Pdf::loadView('pdf.verklaring', $data)->setPaper('a4', 'portrait');
 
-        $naam = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $data['naam']);
-        $bestandsnaam = "groepenkast_verklaring_{$naam}.pdf";
+        $bestandsnaam = 'groepenkast_verklaring_' . preg_replace('/[^a-zA-Z0-9_\-]/', '_', $data['naam']) . '.pdf';
 
         return $pdf->download($bestandsnaam);
     }

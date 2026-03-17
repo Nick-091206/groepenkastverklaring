@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+            <div class="bg-white shadow-sm sm:rounded-lg p-6">
 
                 <p class="mb-6 text-gray-600">Vul per groep een omschrijving in (optioneel).</p>
 
@@ -23,30 +23,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for ($i = 1; $i <= $aantalGroepen; $i++)
+                                @foreach (range(1, $aantalGroepen) as $i)
                                     <tr class="{{ $i % 2 === 0 ? 'bg-gray-50' : 'bg-white' }}">
                                         <td class="border border-gray-300 px-3 py-2 font-medium text-center">{{ $i }}</td>
                                         <td class="border border-gray-300 px-1 py-1">
-                                            <input type="text"
+                                            <x-text-input
                                                 name="groep_{{ $i }}"
-                                                value="{{ old("groep_{$i}") }}"
-                                                class="w-full border-0 bg-transparent focus:ring-0 focus:outline-none px-2 py-1">
+                                                type="text"
+                                                class="w-full border-0 shadow-none bg-transparent focus:ring-0"
+                                                :value="old('groep_' . $i)" />
                                         </td>
                                     </tr>
-                                @endfor
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
 
                     <div class="flex justify-between mt-6">
-                        <a href="{{ route('wizard.step1') }}"
-                            class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-6 rounded-md">
+                        <x-secondary-button onclick="window.location='{{ route('wizard.step1') }}'">
                             &larr; Terug
-                        </a>
-                        <button type="submit"
-                            class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-md">
+                        </x-secondary-button>
+                        <x-primary-button>
                             PDF genereren &amp; downloaden
-                        </button>
+                        </x-primary-button>
                     </div>
                 </form>
 
