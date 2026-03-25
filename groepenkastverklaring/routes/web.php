@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VerklaringController;
 use App\Http\Controllers\WizardController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Verklaringen overzicht
+    Route::get('/verklaringen', [VerklaringController::class, 'index'])->name('verklaringen.index');
+    Route::get('/verklaringen/{verklaring}/edit', [VerklaringController::class, 'edit'])->name('verklaringen.edit');
+    Route::put('/verklaringen/{verklaring}', [VerklaringController::class, 'update'])->name('verklaringen.update');
+    Route::get('/verklaringen/{verklaring}/download', [VerklaringController::class, 'download'])->name('verklaringen.download');
+    Route::delete('/verklaringen/{verklaring}', [VerklaringController::class, 'destroy'])->name('verklaringen.destroy');
 
     // Groepenkast verklaring wizard
     Route::get('/wizard',          [WizardController::class, 'step1'])->name('wizard.step1');

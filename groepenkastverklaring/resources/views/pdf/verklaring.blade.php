@@ -5,12 +5,13 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* Jouw originele marges zijn intact gebleven */
         body {
             font-family: DejaVu Sans, Arial, sans-serif;
             font-size: 9pt;
             color: #1a1a1a;
             background: #fff;
-            margin: 1.8cm;
+            margin: 1.8cm; 
         }
 
         /* Header */
@@ -22,6 +23,7 @@
         .header-left {
             display: table-cell;
             vertical-align: top;
+            text-align: left; /* Zorgt dat de tekst links blijft binnen de tabelkop */
         }
         .header-right {
             display: table-cell;
@@ -50,6 +52,7 @@
         .hr {
             border: none;
             border-top: 2.5pt solid #1a1a1a;
+            margin-bottom: 4mm; /* Extra ruimte tussen de lijn en de kolomtitels */
         }
 
         /* Groepen tabel */
@@ -57,6 +60,11 @@
             width: 100%;
             border-collapse: collapse;
         }
+        
+        table.groepen thead {
+            display: table-header-group; /* Dit zorgt voor de herhaling op elke pagina */
+        }
+
         table.groepen th {
             padding: 3px 6px;
             font-size: 8.5pt;
@@ -82,6 +90,7 @@
             display: table;
             width: 100%;
             margin-top: 4mm;
+            page-break-inside: avoid; /* Voorkomt dat de footer doormidden breekt */
         }
         .footer-left {
             display: table-cell;
@@ -131,26 +140,28 @@
 </head>
 <body>
 
-    <div class="header">
-        <div class="header-left">
-            <div class="header-title">Groepenindeling</div>
-            <div class="header-address">
-                <strong>{{ $naam }}</strong> &nbsp;&bull;&nbsp; {{ $adres }}, {{ $postcode }} {{ $stad }}
-            </div>
-        </div>
-        <div class="header-right">
-            @if (file_exists(public_path('images/logo.png')))
-                <img src="{{ public_path('images/logo.png') }}" class="logo" alt="logo">
-            @elseif (file_exists(public_path('images/logo.jpg')))
-                <img src="{{ public_path('images/logo.jpg') }}" class="logo" alt="logo">
-            @endif
-        </div>
-    </div>
-
-    <hr class="hr">
-
     <table class="groepen">
         <thead>
+            <tr>
+                <td colspan="2" style="border: none; padding: 0; background: #fff;">
+                    <div class="header">
+                        <div class="header-left">
+                            <div class="header-title">Groepenindeling</div>
+                            <div class="header-address">
+                                <strong>{{ $naam }}</strong> &nbsp;&bull;&nbsp; {{ $adres }}, {{ $postcode }} {{ $stad }}
+                            </div>
+                        </div>
+                        <div class="header-right">
+                            @if (file_exists(public_path('images/logo.png')))
+                                <img src="{{ public_path('images/logo.png') }}" class="logo" alt="logo">
+                            @elseif (file_exists(public_path('images/logo.jpg')))
+                                <img src="{{ public_path('images/logo.jpg') }}" class="logo" alt="logo">
+                            @endif
+                        </div>
+                    </div>
+                    <hr class="hr">
+                </td>
+            </tr>
             <tr>
                 <th class="col-groep">Groep</th>
                 <th>Omschrijving</th>
@@ -166,7 +177,7 @@
         </tbody>
     </table>
 
-    <hr class="hr">
+    <hr class="hr" style="margin-top: 3mm;">
 
     <div class="footer">
         <div class="footer-left">

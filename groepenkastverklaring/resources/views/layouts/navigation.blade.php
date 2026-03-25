@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('wizard.step1')" :active="request()->routeIs('wizard.*')">
                         Nieuwe Verklaring
                     </x-nav-link>
+                    <x-nav-link :href="route('verklaringen.index')" :active="request()->routeIs('verklaringen.*')">
+                        Mijn Verklaringen
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -69,6 +72,9 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('wizard.step1')" :active="request()->routeIs('wizard.*')">
                 Nieuwe Verklaring
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('verklaringen.index')" :active="request()->routeIs('verklaringen.*')">
+                Mijn Verklaringen
             </x-responsive-nav-link>
         </div>
 

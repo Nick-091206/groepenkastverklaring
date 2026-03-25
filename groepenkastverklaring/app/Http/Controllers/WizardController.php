@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Verklaring;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -82,6 +83,20 @@ class WizardController extends Controller
             'stad'     => session('wizard.stad'),
             'groepen'  => session('wizard.groepen'),
         ];
+
+        // Opslaan in database
+        Verklaring::create([
+            'user_id'        => auth()->id(),
+            'naam'           => $data['naam'],
+            'adres'          => $data['adres'],
+            'postcode'       => $data['postcode'],
+            'stad'           => $data['stad'],
+            'aantal_groepen' => session('wizard.aantal_groepen'),
+            'groepen'        => $data['groepen'],
+        ]);
+
+        // Sessie opschonen
+        session()->forget(['wizard.naam', 'wizard.adres', 'wizard.postcode', 'wizard.stad', 'wizard.aantal_groepen', 'wizard.groepen']);
 
         $pdf = Pdf::loadView('pdf.verklaring', $data)->setPaper('a4', 'portrait');
 
