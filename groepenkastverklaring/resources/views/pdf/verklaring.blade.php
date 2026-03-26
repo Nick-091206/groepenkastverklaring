@@ -5,16 +5,14 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* Jouw originele marges zijn intact gebleven */
         body {
             font-family: DejaVu Sans, Arial, sans-serif;
             font-size: 9pt;
             color: #1a1a1a;
             background: #fff;
-            margin: 1.8cm; 
+            margin: 1.8cm;
         }
 
-        /* Header */
         .header {
             width: 100%;
             display: table;
@@ -23,7 +21,7 @@
         .header-left {
             display: table-cell;
             vertical-align: top;
-            text-align: left; /* Zorgt dat de tekst links blijft binnen de tabelkop */
+            text-align: left;
         }
         .header-right {
             display: table-cell;
@@ -48,21 +46,19 @@
             max-width: 83mm;
         }
 
-        /* Horizontale lijn */
         .hr {
             border: none;
             border-top: 2.5pt solid #1a1a1a;
-            margin-bottom: 4mm; /* Extra ruimte tussen de lijn en de kolomtitels */
+            margin-bottom: 4mm;
         }
 
-        /* Groepen tabel */
         table.groepen {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         table.groepen thead {
-            display: table-header-group; /* Dit zorgt voor de herhaling op elke pagina */
+            display: table-header-group;
         }
 
         table.groepen th {
@@ -77,20 +73,20 @@
             width: 28mm;
         }
         table.groepen td {
-            padding: 3px 6px;
+            padding: 1px 6px;
             font-size: 8.5pt;
-            height: 11mm;
+            font-weight: bold;
+            height: 7mm;
             vertical-align: middle;
         }
         tr.row-even { background-color: #dce9dc; }
         tr.row-odd  { background-color: #ffffff; }
 
-        /* Footer */
         .footer {
             display: table;
             width: 100%;
             margin-top: 4mm;
-            page-break-inside: avoid; /* Voorkomt dat de footer doormidden breekt */
+            page-break-inside: avoid;
         }
         .footer-left {
             display: table-cell;
@@ -148,7 +144,7 @@
                         <div class="header-left">
                             <div class="header-title">Groepenindeling</div>
                             <div class="header-address">
-                                <strong>{{ $naam }}</strong> &nbsp;&bull;&nbsp; {{ $adres }}, {{ $postcode }} {{ $stad }}
+                                <strong>{{ $naam }}</strong> &nbsp;&bull;&nbsp; {{ $adres }}, {{ $postcode }} {{ $stad }} &nbsp;&bull;&nbsp; {{ $datum }}
                             </div>
                         </div>
                         <div class="header-right">
@@ -177,7 +173,7 @@
         </tbody>
     </table>
 
-    <hr class="hr" style="margin-top: 3mm;">
+    <hr class="hr" style="margin-top: 0;">
 
     <div class="footer">
         <div class="footer-left">
@@ -196,17 +192,19 @@
         <div class="footer-right">
             <div class="box">
                 <div class="box-title">De installateur van deze installatie:</div>
-                <div class="box-lines">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                </div>
+                @if($installateur)
+                    <div style="font-size: 10pt; padding: 2mm 0;">{{ $installateur }}</div>
+                @else
+                    <div class="box-lines">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                @endif
             </div>
             <div class="box">
-                <div class="box-title">Vult u hier het telefoonnummer van uw netbeheerder in, zodat u dat in noodgevallen snel bij de hand heeft.</div>
-                <div class="box-lines">
-                    <div class="line"></div>
-                </div>
+                <div class="box-title">Telefoonnummer netbeheerder (voor noodgevallen):</div>
+                <div style="font-size: 14pt; font-weight: bold; padding: 2mm 0;">0800-9009</div>
             </div>
         </div>
     </div>

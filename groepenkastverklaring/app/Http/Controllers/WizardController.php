@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Verklaring;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class WizardController extends Controller
 {
@@ -21,6 +20,7 @@ class WizardController extends Controller
             'postcode'       => 'required|string|max:20',
             'stad'           => 'required|string|max:255',
             'aantal_groepen' => 'required|integer|min:1|max:100',
+            'installateur'   => 'nullable|string|max:255',
         ]);
 
         session([
@@ -29,6 +29,7 @@ class WizardController extends Controller
             'wizard.postcode'       => $request->postcode,
             'wizard.stad'           => $request->stad,
             'wizard.aantal_groepen' => (int) $request->aantal_groepen,
+            'wizard.installateur'   => $request->installateur,
         ]);
 
         return redirect()->route('wizard.step2');
@@ -67,41 +68,29 @@ class WizardController extends Controller
 
         session(['wizard.groepen' => $groepen]);
 
-        return redirect()->route('wizard.pdf');
+        return redirect()->route('wizard.store');
     }
 
-    public function generatePdf()
+    public function store()
     {
         if (! session()->has('wizard.groepen')) {
             return redirect()->route('wizard.step1');
         }
 
-        $data = [
-            'naam'     => session('wizard.naam'),
-            'adres'    => session('wizard.adres'),
-            'postcode' => session('wizard.postcode'),
-            'stad'     => session('wizard.stad'),
-            'groepen'  => session('wizard.groepen'),
-        ];
-
-        // Opslaan in database
         Verklaring::create([
             'user_id'        => auth()->id(),
-            'naam'           => $data['naam'],
-            'adres'          => $data['adres'],
-            'postcode'       => $data['postcode'],
-            'stad'           => $data['stad'],
+            'naam'           => session('wizard.naam'),
+            'adres'          => session('wizard.adres'),
+            'postcode'       => session('wizard.postcode'),
+            'stad'           => session('wizard.stad'),
             'aantal_groepen' => session('wizard.aantal_groepen'),
-            'groepen'        => $data['groepen'],
+            'groepen'        => session('wizard.groepen'),
+            'installateur'   => session('wizard.installateur'),
         ]);
 
-        // Sessie opschonen
-        session()->forget(['wizard.naam', 'wizard.adres', 'wizard.postcode', 'wizard.stad', 'wizard.aantal_groepen', 'wizard.groepen']);
+        session()->forget(['wizard.naam', 'wizard.adres', 'wizard.postcode', 'wizard.stad', 'wizard.aantal_groepen', 'wizard.groepen', 'wizard.installateur']);
 
-        $pdf = Pdf::loadView('pdf.verklaring', $data)->setPaper('a4', 'portrait');
-
-        $bestandsnaam = 'groepenkast_verklaring_' . preg_replace('/[^a-zA-Z0-9_\-]/', '_', $data['naam']) . '.pdf';
-
-        return $pdf->download($bestandsnaam);
+        return redirect()->route('verklaringen.index')
+            ->with('success', 'Verklaring succesvol aangemaakt.');
     }
 }

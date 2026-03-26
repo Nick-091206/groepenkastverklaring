@@ -17,6 +17,7 @@ class Verklaring extends Model
         'stad',
         'aantal_groepen',
         'groepen',
+        'installateur',
     ];
 
     protected $casts = [

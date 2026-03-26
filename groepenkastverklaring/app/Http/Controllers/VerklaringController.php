@@ -38,6 +38,7 @@ class VerklaringController extends Controller
             'postcode'       => 'required|string|max:20',
             'stad'           => 'required|string|max:255',
             'aantal_groepen' => 'required|integer|min:1|max:100',
+            'installateur'   => 'nullable|string|max:255',
         ]);
 
         $aantalGroepen = (int) $request->aantal_groepen;
@@ -54,6 +55,7 @@ class VerklaringController extends Controller
             'stad' => $request->stad,
             'aantal_groepen' => $aantalGroepen,
             'groepen' => $groepen,
+            'installateur' => $request->installateur,
         ]);
 
         return redirect()->route('verklaringen.index')
@@ -67,11 +69,13 @@ class VerklaringController extends Controller
         }
 
         $data = [
-            'naam'     => $verklaring->naam,
-            'adres'    => $verklaring->adres,
-            'postcode' => $verklaring->postcode,
-            'stad'     => $verklaring->stad,
-            'groepen'  => $verklaring->groepen,
+            'naam'         => $verklaring->naam,
+            'adres'        => $verklaring->adres,
+            'postcode'     => $verklaring->postcode,
+            'stad'         => $verklaring->stad,
+            'groepen'      => $verklaring->groepen,
+            'installateur' => $verklaring->installateur,
+            'datum'        => $verklaring->updated_at->format('d-m-Y'),
         ];
 
         $pdf = Pdf::loadView('pdf.verklaring', $data)->setPaper('a4', 'portrait');

@@ -39,10 +39,16 @@
                         </div>
                     </div>
 
-                    <div class="mb-6">
+                    <div class="mb-4">
                         <x-input-label for="aantal_groepen" value="Aantal groepen" />
                         <x-text-input id="aantal_groepen" name="aantal_groepen" type="number" class="mt-1 block w-32" :value="old('aantal_groepen', 10)" min="1" max="100" required />
                         <x-input-error :messages="$errors->get('aantal_groepen')" class="mt-1" />
+                    </div>
+
+                    <div class="mb-6">
+                        <x-input-label for="installateur" value="Installateur (optioneel)" />
+                        <x-text-input id="installateur" name="installateur" type="text" class="mt-1 block w-full" :value="old('installateur')" placeholder="Naam van de installateur" />
+                        <x-input-error :messages="$errors->get('installateur')" class="mt-1" />
                     </div>
 
                     <div class="flex justify-end">
