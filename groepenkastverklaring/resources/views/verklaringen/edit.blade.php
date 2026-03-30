@@ -60,10 +60,17 @@
                                 <x-input-error :messages="$errors->get('aantal_groepen')" class="mt-1" />
                             </div>
 
-                            <div class="mb-4">
-                                <x-input-label for="installateur" value="Installateur (optioneel)" />
-                                <x-text-input id="installateur" name="installateur" type="text" class="mt-1 block w-full" :value="old('installateur', $verklaring->installateur)" placeholder="Naam van de installateur" />
-                                <x-input-error :messages="$errors->get('installateur')" class="mt-1" />
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <x-input-label for="installateur" value="Installateur (optioneel)" />
+                                    <x-text-input id="installateur" name="installateur" type="text" class="mt-1 block w-full" :value="old('installateur', $verklaring->installateur)" placeholder="Naam van de installateur" />
+                                    <x-input-error :messages="$errors->get('installateur')" class="mt-1" />
+                                </div>
+                                <div>
+                                    <x-input-label for="installateur_telefoon" value="Telefoon installateur" />
+                                    <x-text-input id="installateur_telefoon" name="installateur_telefoon" type="text" class="mt-1 block w-full" :value="old('installateur_telefoon', $verklaring->installateur_telefoon)" placeholder="Telefoonnummer" />
+                                    <x-input-error :messages="$errors->get('installateur_telefoon')" class="mt-1" />
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -193,7 +193,12 @@
             <div class="box">
                 <div class="box-title">De installateur van deze installatie:</div>
                 @if($installateur)
-                    <div style="font-size: 10pt; padding: 2mm 0;">{{ $installateur }}</div>
+                    <div style="font-size: 10pt; padding: 2mm 0;">
+                        {{ $installateur }}
+                        @if($installateur_telefoon)
+                            <br>Tel: {{ $installateur_telefoon }}
+                        @endif
+                    </div>
                 @else
                     <div class="box-lines">
                         <div class="line"></div>
@@ -203,7 +208,7 @@
                 @endif
             </div>
             <div class="box">
-                <div class="box-title">Telefoonnummer netbeheerder (voor noodgevallen):</div>
+                <div class="box-title">Netbeheerdernederland.nl<br>(storingsnummer)</div>
                 <div style="font-size: 14pt; font-weight: bold; padding: 2mm 0;">0800-9009</div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Verklaringen
+            {{ $title }}
         </h2>
     </x-slot>
 
@@ -16,7 +16,7 @@
             <div class="bg-white shadow-sm rounded-lg overflow-hidden">
                 @if($verklaringen->isEmpty())
                     <div class="p-8 text-center text-gray-500">
-                        <p class="mb-4">Je hebt nog geen verklaringen aangemaakt.</p>
+                        <p class="mb-4">Er zijn nog geen verklaringen.</p>
                         <a href="{{ route('wizard.step1') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-md font-semibold text-xs uppercase hover:bg-gray-700">
                             + Nieuwe Verklaring Aanmaken
                         </a>
@@ -26,6 +26,9 @@
                         <table class="w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
+                                    @if($showOwner)
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Eigenaar</th>
+                                    @endif
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Naam</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Adres</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Groepen</th>
@@ -35,7 +38,11 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($verklaringen as $verklaring)
-                                    <tr class="hover:bg-gray-50 cursor-pointer" onclick="window.location='{{ route('verklaringen.edit', $verklaring) }}'">
+                                    @php $isOwner = $verklaring->user_id === auth()->id(); @endphp
+                                    <tr class="hover:bg-gray-50 {{ $isOwner ? 'cursor-pointer' : '' }}" @if($isOwner) onclick="window.location='{{ route('verklaringen.edit', $verklaring) }}'" @endif>
+                                        @if($showOwner)
+                                            <td class="px-4 py-3 text-sm text-gray-500">{{ $verklaring->user->name }}</td>
+                                        @endif
                                         <td class="px-4 py-3 text-sm text-gray-900">{{ $verklaring->naam }}</td>
                                         <td class="px-4 py-3 text-sm text-gray-500">{{ $verklaring->adres }}, {{ $verklaring->postcode }} {{ $verklaring->stad }}</td>
                                         <td class="px-4 py-3 text-sm text-gray-500">{{ $verklaring->aantal_groepen }}</td>

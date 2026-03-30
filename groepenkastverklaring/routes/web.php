@@ -23,11 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/verklaringen/{verklaring}/download', [VerklaringController::class, 'download'])->name('verklaringen.download');
     Route::delete('/verklaringen/{verklaring}', [VerklaringController::class, 'destroy'])->name('verklaringen.destroy');
 
-    Route::get('/wizard',          [WizardController::class, 'step1'])->name('wizard.step1');
-    Route::post('/wizard/stap1',   [WizardController::class, 'step1Store'])->name('wizard.step1.store');
-    Route::get('/wizard/stap2',    [WizardController::class, 'step2'])->name('wizard.step2');
-    Route::post('/wizard/stap2',   [WizardController::class, 'step2Store'])->name('wizard.step2.store');
-    Route::get('/wizard/store',   [WizardController::class, 'store'])->name('wizard.store');
+    Route::get('/wizard', [WizardController::class, 'step1'])->name('wizard.step1');
+    Route::post('/wizard/stap1', [WizardController::class, 'step1Store'])->name('wizard.step1.store');
+    Route::get('/wizard/stap2', [WizardController::class, 'step2'])->name('wizard.step2');
+    Route::post('/wizard/stap2', [WizardController::class, 'step2Store'])->name('wizard.step2.store');
+    Route::get('/wizard/store', [WizardController::class, 'store'])->name('wizard.store');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
