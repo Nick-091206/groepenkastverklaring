@@ -15,6 +15,11 @@
                     <x-nav-link :href="route('verklaringen.all')" :active="request()->routeIs('verklaringen.all')">
                         Alle Verklaringen
                     </x-nav-link>
+                    @if(Auth::user()->is_admin)
+                        <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.*')">
+                            Users
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -72,6 +77,11 @@
             <x-responsive-nav-link :href="route('verklaringen.all')" :active="request()->routeIs('verklaringen.all')">
                 Alle Verklaringen
             </x-responsive-nav-link>
+            @if(Auth::user()->is_admin)
+                <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.*')">
+                    Admin
+                </x-responsive-nav-link>
+            @endif
             <div class="px-4 pt-2">
                 <a href="{{ route('wizard.step1') }}" class="block w-full text-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
                     + Nieuwe Verklaring

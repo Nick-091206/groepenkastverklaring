@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VerklaringController;
 use App\Http\Controllers\WizardController;
@@ -29,6 +30,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/wizard/stap2', [WizardController::class, 'step2'])->name('wizard.step2');
     Route::post('/wizard/stap2', [WizardController::class, 'step2Store'])->name('wizard.step2.store');
     Route::get('/wizard/store', [WizardController::class, 'store'])->name('wizard.store');
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/users', [AdminController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [AdminController::class, 'create'])->name('users.create');
+    Route::post('/users', [AdminController::class, 'store'])->name('users.store');
+    Route::get('/users/{user}/edit', [AdminController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [AdminController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [AdminController::class, 'destroy'])->name('users.destroy');
 });
 
 require __DIR__ . '/auth.php';
