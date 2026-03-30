@@ -20,6 +20,11 @@
                     @csrf
                     @method('PUT')
 
+                    <div class="mb-6 pb-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">{{ $verklaring->naam }}</h3>
+                        <p class="text-sm text-gray-600">{{ $verklaring->adres }}, {{ $verklaring->postcode }} {{ $verklaring->stad }}</p>
+                    </div>
+
                     <div class="mb-6" x-data="{ open: false }">
                         <button type="button" @click="open = !open" class="flex items-center justify-between w-full text-left">
                             <h3 class="text-lg font-medium text-gray-900">Algemene Gegevens</h3>
