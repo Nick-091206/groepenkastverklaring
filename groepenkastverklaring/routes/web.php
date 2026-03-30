@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::get('/verklaringen', [VerklaringController::class, 'index'])->name('verklaringen.index');
+    Route::get('/verklaringen/alle', [VerklaringController::class, 'all'])->name('verklaringen.all');
     Route::get('/verklaringen/{verklaring}/edit', [VerklaringController::class, 'edit'])->name('verklaringen.edit');
     Route::put('/verklaringen/{verklaring}', [VerklaringController::class, 'update'])->name('verklaringen.update');
     Route::get('/verklaringen/{verklaring}/download', [VerklaringController::class, 'download'])->name('verklaringen.download');

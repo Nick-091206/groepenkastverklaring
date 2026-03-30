@@ -17,7 +17,24 @@ class VerklaringController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('verklaringen.index', compact('verklaringen'));
+        return view('verklaringen.index', [
+            'verklaringen' => $verklaringen,
+            'title'        => 'Mijn Verklaringen',
+            'showOwner'    => false,
+        ]);
+    }
+
+    public function all(): View
+    {
+        $verklaringen = Verklaring::with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('verklaringen.index', [
+            'verklaringen' => $verklaringen,
+            'title'        => 'Alle Verklaringen',
+            'showOwner'    => true,
+        ]);
     }
 
     public function edit(Verklaring $verklaring): View
@@ -69,10 +86,6 @@ class VerklaringController extends Controller
 
     public function download(Verklaring $verklaring): Response
     {
-        if ($verklaring->user_id !== auth()->id()) {
-            abort(403);
-        }
-
         $data = [
             'naam'                  => $verklaring->naam,
             'adres'                 => $verklaring->adres,

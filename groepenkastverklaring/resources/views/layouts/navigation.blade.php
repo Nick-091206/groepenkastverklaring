@@ -9,8 +9,11 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('verklaringen.index')" :active="request()->routeIs('verklaringen.*')">
-                        Verklaringen
+                    <x-nav-link :href="route('verklaringen.index')" :active="request()->routeIs('verklaringen.index')">
+                        Mijn Verklaringen
+                    </x-nav-link>
+                    <x-nav-link :href="route('verklaringen.all')" :active="request()->routeIs('verklaringen.all')">
+                        Alle Verklaringen
                     </x-nav-link>
                 </div>
             </div>
@@ -63,8 +66,11 @@
 
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('verklaringen.index')" :active="request()->routeIs('verklaringen.*')">
-                Verklaringen
+            <x-responsive-nav-link :href="route('verklaringen.index')" :active="request()->routeIs('verklaringen.index')">
+                Mijn Verklaringen
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('verklaringen.all')" :active="request()->routeIs('verklaringen.all')">
+                Alle Verklaringen
             </x-responsive-nav-link>
             <div class="px-4 pt-2">
                 <a href="{{ route('wizard.step1') }}" class="block w-full text-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
