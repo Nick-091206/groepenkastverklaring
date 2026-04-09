@@ -39,19 +39,11 @@ class VerklaringController extends Controller
 
     public function edit(Verklaring $verklaring): View
     {
-        if ($verklaring->user_id !== auth()->id()) {
-            abort(403);
-        }
-
         return view('verklaringen.edit', compact('verklaring'));
     }
 
     public function update(Request $request, Verklaring $verklaring): RedirectResponse
     {
-        if ($verklaring->user_id !== auth()->id()) {
-            abort(403);
-        }
-
         $request->validate([
             'naam'                  => 'required|string|max:255',
             'adres'                 => 'required|string|max:255',

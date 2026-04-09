@@ -38,8 +38,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($verklaringen as $verklaring)
-                                    @php $isOwner = $verklaring->user_id === auth()->id(); @endphp
-                                    <tr class="hover:bg-gray-50 {{ $isOwner ? 'cursor-pointer' : '' }}" @if($isOwner) x-data @click="window.location='{{ route('verklaringen.edit', $verklaring) }}'" @endif>
+                                    <tr class="hover:bg-gray-50 cursor-pointer" x-data @click="window.location='{{ route('verklaringen.edit', $verklaring) }}'">
                                         @if($showOwner)
                                             <td class="px-4 py-3 text-sm text-gray-500">{{ $verklaring->user->name }}</td>
                                         @endif
